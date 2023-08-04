@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\build\\intermediates\\res\\merged\\debug\\layout_main.xml.flat",
+        "source": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_cloud_detection.xml.flat",
+        "source": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\src\\main\\res\\layout\\activity_cloud_detection.xml"
+    },
+    {
+        "merged": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\build\\intermediates\\res\\merged\\debug\\drawable_placeholder_image.xml.flat",
+        "source": "E:\\ncnn-android-yolov8-main (2)\\ncnn-android-yolov8-main\\ncnn-android-yolov8\\app\\src\\main\\res\\drawable\\placeholder_image.xml"
+    }
+]

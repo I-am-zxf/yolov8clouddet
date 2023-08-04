@@ -1,0 +1,75 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.tencent.yolov8ncnn"
+4    android:versionCode="1"
+5    android:versionName="1.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:6:5-65
+11-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:6:22-62
+12
+13    <uses-feature android:name="android.hardware.camera2.full" />
+13-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:7:5-66
+13-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:7:19-63
+14
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:8:5-67
+15-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:8:22-64
+16    <uses-permission android:name="android.permission.INTERNET" />
+16-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:8:5-67
+16-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:8:22-64
+17    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+17-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:10:5-79
+17-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:10:22-77
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:11:5-80
+18-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:11:22-78
+19
+20    <application
+20-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:14:5-30:19
+21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+21-->[androidx.core:core:1.5.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\cc5e9dcdc56dc39042f72c501235e83f\core-1.5.0\AndroidManifest.xml:24:18-86
+22        android:debuggable="true"
+23        android:extractNativeLibs="false"
+24        android:label="@string/app_name"
+24-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:16:9-41
+25        android:testOnly="true"
+26        android:usesCleartextTraffic="true" >
+26-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:15:9-44
+27        <activity
+27-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:17:9-25:20
+28            android:name="com.tencent.yolov8ncnn.MainActivity"
+28-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:17:19-46
+29            android:exported="true"
+29-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:20:13-36
+30            android:label="@string/app_name"
+30-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:18:19-51
+31            android:screenOrientation="portrait" >
+31-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:19:19-55
+32            <intent-filter>
+32-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:21:13-24:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:22:17-69
+33-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:22:25-66
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:23:17-77
+35-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:23:27-74
+36            </intent-filter>
+37        </activity>
+38        <activity
+38-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:27:9-29:20
+39            android:name="com.tencent.yolov8ncnn.CloudDetectionActivity"
+39-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:27:19-56
+40            android:label="云端检测" >
+40-->E:\ncnn-android-yolov8-main (2)\ncnn-android-yolov8-main\ncnn-android-yolov8\app\src\main\AndroidManifest.xml:28:13-33
+41        </activity>
+42    </application>
+43
+44</manifest>

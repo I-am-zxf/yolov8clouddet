@@ -1,0 +1,36 @@
+# ninja log v5
+0	1061	711381367	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+93	1093	711381367	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+36	1227	711381367	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1227	1660	711381367	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	13	0	clean	3f68a775f23db94d
+2	1035	711383111	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+99	1052	711383111	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+39	1191	711383112	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1191	1651	711383112	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	12	0	clean	3f68a775f23db94d
+3	1045	711383750	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+40	1079	711383750	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+98	1225	711383750	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1225	1661	711383751	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	13	0	clean	3f68a775f23db94d
+3	1021	711383854	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+99	1049	711383854	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+40	1199	711383854	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1199	1631	711383854	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	11	0	clean	3f68a775f23db94d
+98	1042	711384006	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+3	1048	711384006	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+41	1188	711384007	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1188	1621	711384007	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	13	0	clean	3f68a775f23db94d
+0	11	0	clean	3f68a775f23db94d
+2	1049	711384085	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+98	1108	711384085	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+39	1247	711384085	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1247	1689	711384085	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
+0	14	0	clean	3f68a775f23db94d
+3	1049	711384392	CMakeFiles/yolov8ncnn.dir/yolov8ncnn.cpp.o	94a58638590ec983
+96	1089	711384392	CMakeFiles/yolov8ncnn.dir/ndkcamera.cpp.o	edb65a91673a4f6b
+39	1253	711384392	CMakeFiles/yolov8ncnn.dir/yolo.cpp.o	c8cb77c0e8510c23
+1253	1684	711384393	E:/ncnn-android-yolov8-main (2)/ncnn-android-yolov8-main/ncnn-android-yolov8/app/build/intermediates/cmake/debug/obj/x86/libyolov8ncnn.so	afe182d5c763c9c3
