@@ -6,9 +6,7 @@ com/tencent/yolov8ncnn/CloudDetectionActivity.java
  com.tencent.yolov8ncnn.CloudDetectionActivity
  com.tencent.yolov8ncnn.CloudDetectionActivity$1
  com.tencent.yolov8ncnn.CloudDetectionActivity$2
- com.tencent.yolov8ncnn.CloudDetectionActivity$3
- com.tencent.yolov8ncnn.CloudDetectionActivity$3$1
- com.tencent.yolov8ncnn.CloudDetectionActivity$3$2
+ com.tencent.yolov8ncnn.CloudDetectionActivity$UploadImageTask
 com/tencent/yolov8ncnn/MainActivity.java
  com.tencent.yolov8ncnn.MainActivity
  com.tencent.yolov8ncnn.MainActivity$1

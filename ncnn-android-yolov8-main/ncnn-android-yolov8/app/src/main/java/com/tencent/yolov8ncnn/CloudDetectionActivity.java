@@ -4,10 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -23,24 +25,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CloudDetectionActivity extends Activity {
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private static final int REQUEST_READ_EXTERNAL_STORAGE = 1;
+
+    private static final int REQUEST_IMAGE_PICK = 1;
+    private static final int REQUEST_PERMISSION = 2;
 
     private ImageView imageView;
     private TextView resultTextView;
-    private Button selectImageButton;
-    private Button uploadButton;
-    private String selectedImagePath;
+    private Bitmap selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,179 +49,121 @@ public class CloudDetectionActivity extends Activity {
 
         imageView = findViewById(R.id.imageView);
         resultTextView = findViewById(R.id.resultTextView);
-        selectImageButton = findViewById(R.id.selectImageButton);
-        uploadButton = findViewById(R.id.uploadButton);
+        Button selectImageButton = findViewById(R.id.selectImageButton);
+        Button uploadButton = findViewById(R.id.uploadButton);
 
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openImageGallery();
+                if (checkPermission()) {
+                    openImagePicker();
+                } else {
+                    requestPermission();
+                }
             }
         });
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedImagePath != null) {
-                    uploadImage(selectedImagePath);
+                if (selectedImage != null) {
+                    new UploadImageTask().execute();
                 } else {
-                    resultTextView.setText("请先选择图片");
+                    Toast.makeText(CloudDetectionActivity.this, "请先选择一张图像", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // 如果没有权限，申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-        }
+    private boolean checkPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                REQUEST_PERMISSION);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == REQUEST_READ_EXTERNAL_STORAGE) {
-            // 检查权限是否被授予
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == REQUEST_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 权限已被授予，可以执行上传操作
-                uploadImage(selectedImagePath);
+                openImagePicker();
             } else {
-                // 权限被拒绝，提示用户
-                Toast.makeText(this, "需要读取外部存储器的权限才能上传图片", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "需要授权访问外部存储器才能选择图像", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void openImageGallery() {
+    private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            selectedImagePath = getRealPathFromURI(imageUri);
-            imageView.setImageURI(imageUri);
-        }
-    }
-
-    private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
-        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String path = cursor.getString(columnIndex);
-        cursor.close();
-        return path;
-    }
-
-    private void uploadImage(final String imagePath) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String serverUrl = "http://192.168.1.104:8001/detect";
-                String lineEnd = "\r\n";
-                String twoHyphens = "--";
-                String boundary = "*****";
-
-                try {
-                    URL url = new URL(serverUrl);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setDoInput(true);
-                    conn.setDoOutput(true);
-                    conn.setUseCaches(false);
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Connection", "Keep-Alive");
-                    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-
-                    DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-
-                    dos.writeBytes(twoHyphens + boundary + lineEnd);
-                    dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + imagePath + "\"" + lineEnd);
-                    dos.writeBytes(lineEnd);
-
-                    InputStream fileInputStream = new FileInputStream(imagePath);
-                    int bytesRead, bufferSize;
-                    byte[] buffer;
-                    bufferSize = 1024;
-                    buffer = new byte[bufferSize];
-                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                    while (bytesRead > 0) {
-                        dos.write(buffer, 0, bufferSize);
-                        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                    }
-                    dos.writeBytes(lineEnd);
-                    dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-                    
-                    int serverResponseCode = conn.getResponseCode();
-                    // 获取服务器响应消息
-                    String serverResponseMessage = conn.getResponseMessage();
-
-                    if (serverResponseCode == 200) {
-                        Log.d("Upload", "File uploaded successfully");
-
-                        // 处理服务器返回的结果，更新UI
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                resultTextView.setText("上传成功");
-
-                                // 解析检测结果并更新UI
-                                String responseStr = serverResponseMessage;
-                                try {
-                                    JSONObject responseJson = new JSONObject(responseStr);
-                                    boolean success = responseJson.getBoolean("success");
-                                    if (success) {
-                                        // 获取结果图片的URL并显示
-                                        String resultImagePath = responseJson.getString("result_image_path");
-                                        Uri resultImageUri = Uri.parse(resultImagePath);
-                                        imageView.setImageURI(resultImageUri);
-
-                                        // 获取检测结果并显示
-                                        JSONArray detectionResults = responseJson.getJSONArray("detection_results");
-                                        showDetectionResults(detectionResults);
-                                    } else {
-                                        // 上传成功但目标检测失败
-                                        resultTextView.setText("目标检测失败");
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(CloudDetectionActivity.this, "解析服务器响应失败", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    } else {
-                        Log.e("Upload", "File upload failed, server response code: " + serverResponseCode);
-
-                        // 处理上传失败的情况，更新UI
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                resultTextView.setText("上传失败");
-                            }
-                        });
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                selectedImage = BitmapFactory.decodeStream(inputStream);
+                imageView.setImageBitmap(selectedImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this, "无法读取图像", Toast.LENGTH_SHORT).show();
             }
-        }).start();
+        }
     }
 
-    private void showDetectionResults(JSONArray detectionResults) {
-        // 解析云端检测结果并绘制检测框等信息
-        // 这里根据检测结果的具体格式来处理，例如绘制检测框、类别标签和置信度等信息
-        // ...
+    private class UploadImageTask extends AsyncTask<Void, Void, Bitmap> {
 
-        // 示例代码：直接在TextView中显示检测结果的JSON字符串
-        resultTextView.setText(detectionResults.toString());
+        @Override
+        protected Bitmap doInBackground(Void... voids) {
+            try {
+                // 将Bitmap转换为Base64编码的字符串
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                String imageString = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                // 创建JSON对象
+                JSONObject json = new JSONObject();
+                json.put("image", imageString);
+
+
+                // 创建HTTP连接
+                URL url = new URL("http://20.239.139.115:8000/detect/"); // 替换为您的服务器地址
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                // 发送数据
+                byte[] data = json.toString().getBytes();
+                conn.getOutputStream().write(data);
+
+                // 接收响应数据
+                InputStream inputStream = conn.getInputStream();
+                Bitmap resultBitmap = BitmapFactory.decodeStream(inputStream);
+                inputStream.close();
+                conn.disconnect();
+
+                return resultBitmap;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap resultBitmap) {
+            if (resultBitmap != null) {
+                imageView.setImageBitmap(resultBitmap);
+            } else {
+                resultTextView.setText("连接服务器失败");
+            }
+        }
     }
 }

@@ -39,6 +39,11 @@
             android:name="com.tencent.yolov8ncnn.CloudDetectionActivity"
             android:label="云端检测" >
         </activity>
+
+        <provider
+            android:name="com.squareup.picasso.PicassoProvider"
+            android:authorities="com.tencent.yolov8ncnn.com.squareup.picasso"
+            android:exported="false" />
     </application>
 
 </manifest>
