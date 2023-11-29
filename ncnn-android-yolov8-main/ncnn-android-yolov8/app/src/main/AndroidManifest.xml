@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="com.tencent.yolov8ncnn"
-      android:versionCode="1"
-      android:versionName="1.1">
+    package="com.tencent.yolov8ncnn"
+    android:versionCode="1"
+    android:versionName="1.1">
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera2.full" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-
-
     <application
         android:usesCleartextTraffic="true"
         android:label="@string/app_name">
-        <activity android:name="MainActivity"
-                  android:label="@string/app_name"
-                  android:screenOrientation="portrait"
+
+        <activity android:name=".NewMainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,5 +28,11 @@
         <activity android:name="CloudDetectionActivity"
             android:label="云端检测">
         </activity>
+
+        <activity android:name=".LocalDetectionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:exported="true">
+        </activity>
     </application>
-</manifest> 
+</manifest>

@@ -2,14 +2,18 @@ com/tencent/yolov8ncnn/BuildConfig.java
  com.tencent.yolov8ncnn.BuildConfig
 com/tencent/yolov8ncnn/Yolov8Ncnn.java
  com.tencent.yolov8ncnn.Yolov8Ncnn
+com/tencent/yolov8ncnn/LocalDetectionActivity.java
+ com.tencent.yolov8ncnn.LocalDetectionActivity
+ com.tencent.yolov8ncnn.LocalDetectionActivity$1
+ com.tencent.yolov8ncnn.LocalDetectionActivity$2
+ com.tencent.yolov8ncnn.LocalDetectionActivity$3
+ com.tencent.yolov8ncnn.LocalDetectionActivity$4
 com/tencent/yolov8ncnn/CloudDetectionActivity.java
  com.tencent.yolov8ncnn.CloudDetectionActivity
  com.tencent.yolov8ncnn.CloudDetectionActivity$1
  com.tencent.yolov8ncnn.CloudDetectionActivity$2
  com.tencent.yolov8ncnn.CloudDetectionActivity$UploadImageTask
-com/tencent/yolov8ncnn/MainActivity.java
- com.tencent.yolov8ncnn.MainActivity
- com.tencent.yolov8ncnn.MainActivity$1
- com.tencent.yolov8ncnn.MainActivity$2
- com.tencent.yolov8ncnn.MainActivity$3
- com.tencent.yolov8ncnn.MainActivity$4
+com/tencent/yolov8ncnn/NewMainActivity.java
+ com.tencent.yolov8ncnn.NewMainActivity
+ com.tencent.yolov8ncnn.NewMainActivity$1
+ com.tencent.yolov8ncnn.NewMainActivity$2

@@ -117,10 +117,10 @@ public class CloudDetectionActivity extends Activity {
         }
     }
 
-    private class UploadImageTask extends AsyncTask<Void, Void, Bitmap> {
+    private class UploadImageTask extends AsyncTask<Void, Void, String> {
 
         @Override
-        protected Bitmap doInBackground(Void... voids) {
+        protected String doInBackground(Void... voids) {
             try {
                 // 将Bitmap转换为Base64编码的字符串
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -132,9 +132,8 @@ public class CloudDetectionActivity extends Activity {
                 JSONObject json = new JSONObject();
                 json.put("image", imageString);
 
-
                 // 创建HTTP连接
-                URL url = new URL("http://20.239.139.115:8000/detect/"); // 替换为您的服务器地址
+                URL url = new URL("https://qisingtech.xicp.fun/detect"); // 替换为您的服务器地址
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
@@ -146,11 +145,17 @@ public class CloudDetectionActivity extends Activity {
 
                 // 接收响应数据
                 InputStream inputStream = conn.getInputStream();
-                Bitmap resultBitmap = BitmapFactory.decodeStream(inputStream);
+                ByteArrayOutputStream responseStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    responseStream.write(buffer, 0, bytesRead);
+                }
                 inputStream.close();
-                conn.disconnect();
 
-                return resultBitmap;
+                // 将响应数据解码为字符串
+                String responseString = responseStream.toString("UTF-8");
+                return responseString;
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
@@ -158,12 +163,23 @@ public class CloudDetectionActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(Bitmap resultBitmap) {
-            if (resultBitmap != null) {
-                imageView.setImageBitmap(resultBitmap);
+        protected void onPostExecute(String responseString) {
+            if (responseString != null) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(responseString);
+                    String message = jsonResponse.getString("message");
+                    if (message.equals("No objects detected")) {
+                        // 在应用中显示 "没有检测到目标"
+                        resultTextView.setText("没有检测到目标");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } else {
                 resultTextView.setText("连接服务器失败");
             }
         }
     }
 }
+
+
